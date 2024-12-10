@@ -34,6 +34,18 @@ export const addNewTask = async (newTask) => {
 
 export const completeToggle = async (id) => {
   //Complete Toggle
+  // await fetch(`${localHost}/tasks/${id}`)
+  const taskToComplete = await fetchTask(id);
+  const updatedTask = { ...taskToComplete, completed: !taskToComplete.completed, reminder: false };
+  const res = await fetch(`${localHost}/tasks/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(updatedTask),
+  });
+  const data = await res.json();
+  return data;
 };
 
 export const editTask = async (updatedTask) => {

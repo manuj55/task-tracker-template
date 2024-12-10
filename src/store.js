@@ -46,7 +46,14 @@ export default createStore({
       state.inCompleteTasks = state.inCompleteTasks.filter((t) => t.id != id);
     },
     completeTask(state, { newTask, id }) {
-      //Implement How to handle completeTask Toggle
+      if (newTask.completed) {
+        state.completedTasks = [...state.completedTasks, newTask];
+        state.inCompleteTasks = state.inCompleteTasks.filter((t) => t.id != id);
+      } else {
+        state.inCompleteTasks = [...state.inCompleteTasks, newTask];
+        state.completedTasks = state.completedTasks.filter((t) => t.id != id);
+      }
+      //handle completeTask Toggle
     },
   },
   actions: {
