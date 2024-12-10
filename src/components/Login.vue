@@ -7,7 +7,7 @@
       Registration Successfull Please Login To Continue
     </p>
   </div>
-  <form class="add-form" @submit="onSubmit">
+  <form class="add-form" @submit="onSubmit" v-if="isLoginActive || isRegisterActive">
     <div class="form-control">
       <label>Email</label>
       <input type="email" v-model="email" name="email" placeholder="Email" />
@@ -33,7 +33,7 @@ export default {
       email: "",
       password: "",
       isLoginActive: false,
-      isRegisterActive: true,
+      isRegisterActive: false,
       isRegistrationSuccessfull: false,
     };
   },

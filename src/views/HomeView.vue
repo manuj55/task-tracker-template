@@ -2,10 +2,7 @@
   <div v-if="showAddTask">
     <AddTask v-bind:userName="userName" />
   </div>
-  <Tasks
-    v-bind:completedTasks="$store.state.completedTasks"
-    v-bind:inCompleteTasks="$store.state.inCompleteTasks"
-  />
+  <Tasks v-bind:completedTasks="$store.state.completedTasks" v-bind:inCompleteTasks="$store.state.inCompleteTasks" />
 </template>
 
 <script>
@@ -23,5 +20,8 @@ export default {
     userName: String,
   },
   //Fetch Task using created
+  async created() {
+    this.$store.dispatch("fetchTasks");
+  },
 };
 </script>

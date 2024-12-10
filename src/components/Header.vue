@@ -2,13 +2,13 @@
   <header>
     <div class="header">
       <h1>{{ title }}</h1>
-      <i
-        v-if="isUserLoggedIn"
-        class="fa fa-power-off"
-        @click="handleLogout()"
-      ></i>
+      <i v-if="isUserLoggedIn" class="fa fa-power-off" @click="handleLogout()"></i>
     </div>
     <Login v-bind:isUserLoggedIn="isUserLoggedIn" />
+    <div class="buttons" v-if="isUserLoggedIn">
+      <Button v-bind:text="showAddTask ? 'Close' : 'Add Task'" v-bind:color="showAddTask ? 'red' : 'green'"
+        eventName="Add-Task" @Add-Task="handleToggleAddTask" v-if="isHomePage()" />
+    </div>
   </header>
 </template>
 
@@ -36,6 +36,10 @@ export default {
     },
     isHomePage() {
       //Handle The logic
+      if (this.$route.path === "/") {
+        return true;
+      }
+      return false;
     },
   },
   emits: ["toggle-AddTask"],
@@ -50,13 +54,16 @@ header {
   margin-bottom: 20px;
   flex-direction: column;
 }
+
 .header {
   display: flex;
   align-items: center;
 }
+
 .buttons {
   display: flex;
 }
+
 .fa-power-off {
   position: relative;
   left: 45%;

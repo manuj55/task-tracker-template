@@ -19,7 +19,17 @@ export const toggleReminder = async (id) => {
 };
 
 export const addNewTask = async (newTask) => {
-  //Handle New Task
+  //Handle New 
+  const res = await fetch(`${localHost}/tasks`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newTask),
+  });
+
+  const data = await res.json();
+  return data;
 };
 
 export const completeToggle = async (id) => {

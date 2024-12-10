@@ -6,12 +6,7 @@
     </div>
     <div class="form-control">
       <label>Day & Time</label>
-      <input
-        type="text"
-        name="day"
-        v-model="day"
-        placeholder="Add Day & Time"
-      />
+      <input type="text" name="day" v-model="day" placeholder="Add Day & Time" />
     </div>
     <div class="form-control form-control-check">
       <label>Set Reminder</label>
@@ -39,6 +34,25 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       console.log("New Task Added");
+
+      if (!this.text) {
+        alert("Please add a task");
+        return;
+      }
+
+      const newTask = {
+        text: this.text,
+        day: this.day,
+        reminder: this.reminder,
+        completed: this.completed,
+        userName: this.userName,
+        createdBy: this.$store.state.userName,
+      };
+
+      this.text = "";
+      this.day = "";
+      this.reminder = false;
+      this.$store.dispatch("addTask", newTask);
     },
   },
 };
@@ -48,12 +62,15 @@ export default {
 .add-form {
   margin-bottom: 40px;
 }
+
 .form-control {
   margin: 20px 0;
 }
+
 .form-control label {
   display: block;
 }
+
 .form-control input {
   width: 100%;
   height: 40px;
@@ -61,14 +78,17 @@ export default {
   padding: 3px 7px;
   font-size: 17px;
 }
+
 .form-control-check {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .form-control-check label {
   flex: 1;
 }
+
 .form-control-check input {
   flex: 2;
   height: 20px;

@@ -14,6 +14,9 @@ export default createStore({
       // const decodedEmail = window.atob(userName); // decode the string
       state.userName = userName;
       state.isUserLoggedIn = true;
+      //add below line make state variable persistent
+      // state.isLoginActive = false;
+      // state.isRegisterActive = false;
     },
     userAuthenticated(state, email) {
       //User Authenticated
@@ -24,6 +27,9 @@ export default createStore({
     },
     userNotAuthenticated(state) {
       //User Not Authenticated
+      state.isUserLoggedIn = false;
+      //optional 
+      sessionStorage.removeItem("username");
     },
     setTasks(state, tasks) {
       state.completedTasks = tasks.filter((task) => task.completed == true);
@@ -34,6 +40,7 @@ export default createStore({
     },
     addNewTask(state, newTask) {
       //Add new task
+      state.inCompleteTasks = [...state.inCompleteTasks, newTask];
     },
     deleteTask(state, id) {
       state.inCompleteTasks = state.inCompleteTasks.filter((t) => t.id != id);
@@ -52,6 +59,8 @@ export default createStore({
     },
     async addTask(state, newTask) {
       //Handle New Task
+      const task = await util.addNewTask(newTask);
+      state.commit("addNewTask", task);
     },
     async completeToggle(state, id) {
       const data = await util.completeToggle(id);
