@@ -50,6 +50,17 @@ export const completeToggle = async (id) => {
 
 export const editTask = async (updatedTask) => {
   //Edit Task Implement
+  const id = updatedTask.id;
+  delete updatedTask.id;
+  const res = await fetch(`${localHost}/tasks/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(updatedTask),
+  });
+  const data = await res.json();
+  return data;
 };
 
 export const deleteTask = async (id) => {
